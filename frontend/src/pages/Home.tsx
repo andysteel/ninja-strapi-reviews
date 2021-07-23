@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import useFetch from '../hooks/useFetch'
+import useFetch from '../hooks/useFetchList'
 
 function Home() {
   const {data, error, loading} = useFetch('http://localhost:1337/reviews');
@@ -10,12 +10,12 @@ function Home() {
     <div>
       {data.map((r, i) => (
         <div key={r.title+i} className="review-card">
-          <div className="rating">{r.ratting}</div>
+          <div className="rating">{r.rating}</div>
           <h2>{r.title}</h2>
 
           <small>Stream list</small>
 
-          <p>{r.body}</p>
+          <p className="review-card-body">{r.body.substring(0,200)}...</p>
           <Link to={`/details/${r.id}`}>Read more</Link>
         </div>
       ))}

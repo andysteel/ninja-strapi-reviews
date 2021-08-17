@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
-import Category from './pages/Category';
+import CategoryStream from './pages/Category';
 import Home from './pages/Home';
 import ReviewDetails from './pages/ReviewDetails';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
@@ -19,7 +19,7 @@ function App() {
           <Switch>
             <Route path="/" exact={true} component={Home}></Route>
             <Route path="/details/:id" component={ReviewDetails}></Route>
-            <Route path="/category/:id" component={Category}></Route>
+            <Route path="/category/:id" component={CategoryStream}></Route>
           </Switch>
         </div>
       </ApolloProvider>

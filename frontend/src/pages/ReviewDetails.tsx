@@ -1,5 +1,7 @@
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useQuery, gql } from '@apollo/client';
+import { Category } from '../interfaces/interfaces';
+import ReactMarkdown from 'react-markdown';
 
 function ReviewDetails() {
   const { id } = useParams<any>();
@@ -9,7 +11,11 @@ function ReviewDetails() {
       title,
       body,
       rating,
-      id
+      id,
+      categories {
+        name,
+        id
+      }
     }
   }
   `
@@ -23,9 +29,11 @@ function ReviewDetails() {
           <div className="rating">{data.review.rating}</div>
           <h2>{data.review.title}</h2>
 
-          <Link to="/"><small>Stream list</small></Link>
+          {data.review.categories.map((c: Category) => (
+            <small key={c.id}>{c.name}</small>
+          ))}
 
-          <p className="review-card-body">{data.review.body}</p>
+          <ReactMarkdown className="review-card-body">{data.review.body}</ReactMarkdown>
     </div>
   )
 }

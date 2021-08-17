@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
+import { Category } from '../interfaces/interfaces';
+import ReactMarkdown from 'react-markdown';
 
 const REVIEWS = gql`
   query getReviews {
@@ -7,7 +9,11 @@ const REVIEWS = gql`
       title,
       body,
       rating,
-      id
+      id,
+      categories {
+        name,
+        id
+      }
     }
   }
 `
@@ -27,9 +33,11 @@ function Home() {
           <div className="rating">{r.rating}</div>
           <h2>{r.title}</h2>
 
-          <small>Stream list</small>
+          {r.categories.map((c: Category) => (
+            <small key={c.id}>{c.name}</small>
+          ))}
 
-          <p className="review-card-body">{r.body.substring(0,200)}...</p>
+          <ReactMarkdown className="review-card-body">{`${r.body.substring(0,200)}...`}</ReactMarkdown>
           <Link to={`/details/${r.id}`}>Read more</Link>
         </div>
       ))}
